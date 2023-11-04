@@ -1,0 +1,23 @@
+theme = "rose_pine_dawn"
+
+[editor]
+bufferline = "always"
+
+[editor.cursor-shape]
+insert = "bar"
+normal = "block"
+select = "underline"
+
+[editor.file-picker]
+hidden = false
+
+[editor.statusline]
+left = ["mode", "file-modification-indicator"]
+center = ["read-only-indicator", "version-control"]
+right = ["diagnostics", "position", "total-line-numbers", "file-type"]
+
+[editor.lsp]
+enable = true
+display-messages = false
+auto-signature-help = true
+display-inlay-hints = false

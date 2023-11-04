@@ -1,0 +1,38 @@
+(defpoll time :interval "5s"
+  :initial `date +'{"hour":"%H","min":"%M","year":"%Y","month":"%m","day":"%d","weekn":"%A"}'`
+`date +'{"hour":"%H","min":"%M","year":"%Y","month":"%m","day":"%d","weekn":"%A"}'`)
+(defpoll net :interval "5s"
+  :initial `N/A`
+  `nmcli -t -f SIGNAL,ACTIVE device wifi \
+  | awk -F':' '{if($2=="yes")print$1}'`)
+(defpoll netcurrname :interval "5s"
+  :initial `N/A`
+  `./scripts/getWifiList.sh current name`
+)
+
+(defpoll soundlv :interval "5s"
+  :initial `awk -F"[^0-9]+" '/Left:/ { print $3 }' <(amixer sget Master)`
+  `awk -F"[^0-9]+" '/Left:/ { print $3 }' <(amixer sget Master)`
+)
+
+(defpoll currentbrt :interval "5s"
+  :initial `100`
+  `brightnessctl get`
+)
+
+(defpoll maxbrt :interval "1h"
+  :initial `100`
+  `brightnessctl max`
+)
+
+(defpoll updatecount :interval "5m"
+  :initial "-"
+  `checkupdates | wc -l`
+)
+
+(defpoll ICON :interval "15m" `./scripts/weather_info.sh --icon`)
+(defpoll STAT :interval "15m" `./scripts/weather_info.sh --stat`)
+(defpoll TEMP :interval "15m" `./scripts/weather_info.sh --temp`)
+(defpoll HEX :interval "15m" `./scripts/weather_info.sh --hex`)
+(defpoll QUOTE :interval "15m" `./scripts/weather_info.sh --quote`)
+(defpoll QUOTE2 :interval "15m" `./scripts/weather_info.sh --quote2`)

@@ -1,0 +1,91 @@
+$text: #f8f9fc;
+$background: #0f1724;
+$primary: #6689c2;
+$secondary: #162237;
+$accent: #5b81be;
+
+* {
+  all: unset;
+  font-family: Koulen;
+}
+
+.diag {
+  background-color: $background;
+  border: 2px solid $accent;
+  padding: 20px 50px;
+  border-radius: 20px;
+}
+
+.sidedock {
+  background-color: transparent;
+  color: $text;
+  font-family: Koulen;
+  font-size: 1.3em;
+  padding: 30px;
+
+  .accent {
+    color: $accent;
+  }
+
+  .text {
+    color: $text;
+  }
+
+  .primary {
+    color: $primary;
+  }
+
+  .secondary {
+    color: $secondary;
+  }
+
+  .power {
+    color: #ff6666;
+  }
+
+  .layout {
+    padding: 0 0em;
+  }
+
+  .pos {
+    background-color: $background;
+    padding: 1em 1em;
+    border-radius: 10px;
+    transition: all ease-out;
+    transition-duration: 0.2s;
+  }
+
+  button.pos:hover {
+    background-color: rgba($background, 0.8);
+    transition: all ease-out;
+    transition-duration: 0.2s;
+  }
+
+  circular-progress {
+    color: #fff;
+    background-color: rgba(#fff, 0.1);
+  }
+
+  .image {
+    border-radius: 99999px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-clip: border-box;
+    background-size: cover;
+  }
+
+  scale trough highlight {
+    all: unset;
+    background-color: $accent;
+    color: #000000;
+    border-radius: 20px;
+  }
+
+  scale trough {
+    all: unset;
+    background-color: $secondary;
+    border-radius: 6px;
+    min-height: 18px;
+    min-width: 80px;
+  }
+}

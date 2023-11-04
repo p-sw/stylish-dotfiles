@@ -1,0 +1,386 @@
+(defwidget diag [title diag action]
+  (box :orientation "v" :spacing 24 :space-evenly false :class "diag"
+    (box :orientation "v" :spacing 10 :space-evenly false
+      (label :text title :style "font-size: 36px;font-weight:900;")
+      (label :text "Are you sure?" :style "font-size: 20px;font-weight:200;")
+    )
+    (box :orientation "h" :spacing 20
+      (button
+        :onclick "eww close ${diag}"
+        (label :text "Cancel" :style "font-size: 20px;font-weight:500;")
+      )
+      (button
+        :onclick action
+        (label :text "Confirm" :style "font-size:20px;font-weight:500;")
+      )
+    )
+  )
+)
+
+(defwindow poweroffdiag
+  :monitor 0
+  :stacking "fg"
+  :exclusive false
+  :focusable false
+  :namespace "poweroffdiag"
+  :class "diag"
+  :geometry (geometry :anchor "center")
+  (diag
+    :title "Power Off"
+    :diag "poweroffdiag"
+    :action "poweroff"
+  )
+)
+
+(defwindow rebootdiag
+  :monitor 0
+  :stacking "fg"
+  :exclusive false
+  :focusable false
+  :namespace "rebootdiag"
+  :class "diag"
+  :geometry (geometry :anchor "center")
+  (diag
+    :title "Reboot"
+    :diag "rebootdiag"
+    :action "reboot"
+  )
+)
+
+(defwindow logoutdiag
+  :monitor 0
+  :stacking "fg"
+  :exclusive false
+  :focusable false
+  :namespace "logoutdiag"
+  :class "diag"
+  :geometry (geometry :anchor "center")
+  (diag
+    :title "Log Out"
+    :diag "logoutdiag"
+    :action "loginctl kill-user psw"
+  )
+)
+
+(defwindow sidedock
+  :monitor 0
+  :stacking "bg"
+  :exclusive false ; true if legacy layout
+  :focusable false
+  :namespace "sidedock"
+  :geometry (geometry :width "100%" :height "100%" :x "0px" :y: "0px" :anchor "center")
+  (new_bg_layout)
+)
+
+(defwidget new_bg_layout []
+  (box :class "sidedock" :space-evenly false :spacing 10
+    (box :orientation "v" :spacing 4 :space-evenly false
+      (box :class "pos" :space-evenly false :orientation "v" :valign "center"
+        (image 
+          :valign "center" 
+          :halign "center" 
+          :style "border-radius: 99999px;background-image:url('/worker/Pictures/nyanlang.png')" 
+          :class "image" 
+          :width 125 
+          :height 125 
+          :image-width 125 
+          :image-height 125
+        )
+        (label :text "@pswkr" :xalign 0.5 :yalign 0 :style "font-size: 1em;opacity:0.6;" :valign "center")
+        (label :text "Shinwoo PARK" :xalign 0.5 :yalign 1 :style "font-size: 2.5em;" :valign "center")
+      )
+      (box :orientation "h" :spacing 4
+        (button
+          :class "pos"
+          :onclick "eww open poweroffdiag"
+          (label :text "󰐥" :style "color:#ff6666;font-size:1.5em;")
+        )
+        (button
+          :class "pos"
+          :onclick "eww open rebootdiag"
+          (label :text "󰜉" :style "font-size:1.5em;")
+        )
+        (button
+          :class "pos"
+          :onclick "eww open logoutdiag"
+          (label :text "󰍃" :style "font-size:1.5em;")
+        )
+      )
+      (box :orientation "h" :spacing 4
+        (button
+          :class "pos"
+          :onclick "/home/psw/.local/bin/rofi-wifi-menu.sh &"
+          (circular-progress :value net :width 50 :height 50 :thickness 8 :valign "center" :halign "center" :start-at 25
+            (label :text "" :class "image" :style "background-image:url('./assets/wifi-high-fill.svg')")
+          )
+        )
+        (button
+          :class "pos"
+          :onclick "notify-send --app-name=Battery --icon=/home/psw/.config/eww/assets/battery.svg Battery '${round(EWW_BATTERY.total_avg, 0)}%, ${EWW_BATTERY.CMB0.status}'"
+          (circular-progress :value {EWW_BATTERY.total_avg} :width 50 :height 50 :thickness 8 :valign "center" :halign "center" :start-at 25 :style "color: ${EWW_BATTERY.CMB0.status == "Discharging" ? EWW_BATTERY.total_avg > 75 ? "#aaffaa" : EWW_BATTERY.total_avg > 50 ? "#ffff66" : EWW_BATTERY.total_avg > 25 ? "#cc8822" : "#ff6666" : EWW_BATTERY.CMB0.status == "Charging" ? "#00ff00" : "#ffffff"}"
+            (label :text "" :class "image" :style "background-image:url('./assets/battery.svg')")
+          )
+        )
+      )
+      (box :orientation "h" :spacing 4
+        (button
+          :class "pos"
+          :onclick "notify-send --app-name=CPU --icon=/home/psw/.config/eww/assets/cpu-chip-solid.svg 'CPU Status' '${round(EWW_CPU.avg, 2)}%, ${(EWW_TEMPS.CORETEMP_CORE_0 + EWW_TEMPS.CORETEMP_CORE_1) / 2}°C'"
+          (circular-progress :value {EWW_CPU.avg} :width 50 :height 50 :thickness 8 :valign "center" :halign "center" :start-at 25 :style "color: ${EWW_CPU.avg > 75 ? "#ff6666" : EWW_CPU.avg > 50 ? "#cc8822" : EWW_CPU.avg > 25 ? "#ffff66" : "#66ff66"}"
+            (label :text "" :class "image" :style "background-image:url('./assets/cpu-chip-solid.svg')")
+          )
+        )
+        (button        
+          :class "pos"
+          :onclick "notify-send --app-name=RAM --icon=/home/psw/.config/eww/assets/ram-16-filled.svg 'RAM Status' '${round((EWW_RAM.total_mem - EWW_RAM.available_mem) / 1000000000, 2)}GB / ${round(EWW_RAM.total_mem / 1000000000, 2)}GB, ${round(EWW_RAM.used_mem_perc, 2)}%'"
+          (circular-progress :value {EWW_RAM.used_mem_perc} :width 50 :height 50 :thickness 8 :valign "center" :halign "center" :start-at 25 :style "color: ${EWW_RAM.used_mem_perc > 75 ? "#ff6666" : EWW_RAM.used_mem_perc > 50 ? "#cc8822" : EWW_RAM.used_mem_perc > 25 ? "#ffff66" : "#66ff66"}"
+            (label :text "" :class "image" :style "background-image:url('./assets/ram-16-filled.svg')")
+          )
+        )
+      )
+      (box :orientation "v" :spacing 10 :class "pos" :space-evenly false
+        (label :text "${time.weekn}  ${time.year} / ${time.month} / ${time.day}" :style "font-size:1.5rem;font-weight:500;")
+        (box :orientation "h" :spacing 20 :space-evenly false :hexpand true :halign "center"
+          (label :text {time.hour} :style "font-size:4rem;font-weight:900;")
+          (label :text ":" :style "font-size:2rem;font-weight:900;")
+          (label :text {time.min} :style "font-size:4rem;font-weight:900;")
+        )
+        (label :text {time.hour >= 2 && time.hour <= 4 ? "Early Morning" :
+          time.hour <= 5 ? "Dawn" :
+          time.hour >= 6
+          && (time.hour <= 8 && time.min <= 59)
+          ? "Morning" :
+          time.hour >= 9
+          && (time.hour <= 11 && time.min <= 59)
+          ? "Late Morning" :
+          time.hour == 12 && time.min <= 29
+          ? "Midday" :
+          time.hour >= 12 && time.hour <= 16
+          ? "Afternoon" :
+          time.hour > 16 && time.hour <= 17
+          ? "Late Afternoon" :
+          (time.hour >= 17 && time.min <= 1)
+          || (time.hour <= 18 && time.min <= 20)
+          ? "Early Evening" :
+          time.hour >= 18 && time.hour <= 19
+          ? "Dusk" :
+          time.hour > 19 && time.hour <= 21
+          ? "Late Evening" :
+          time.hour > 21 ? "Night" : "Midnight"} :style "font-size:2rem;font-weight:300;color:#fff;opacity:0.6;"
+          :valign "center"
+          :xalign 0.5
+        )
+      )
+      (box :class "pos"
+        (box :orientation "v" :spacing 10 :space-evenly false
+          (box :orientation "h" :style "padding: 0 20px;"
+            (label :halign "start" :style "color: ${HEX};font-size:36px;" :text ICON)
+            (label :halign "center" :style "color: ${HEX};font-size: 36px;" :text STAT)
+            (label :halign "end" :style "color: ${HEX};font-size:36px;" :text TEMP)
+          )
+          (box :orientation "v" :spacing 0 :halign "center" :space-evenly false 
+				    (label :class "label_quote" :text QUOTE :style "color: ${HEX};font-size:20px;")
+				    (label :class "label_quote" :text QUOTE2 :style "color: ${HEX};font-size:20px;")
+          )        
+        )
+      )
+    )
+    (box)
+    (box)
+    (box :orientation "v" :space-evenly false :spacing 4 :width 400
+       (box :orientation "v" :space-evenly false :spacing 8 :class "pos"
+        (box :orientation "h" :spacing 20 :halign "start" :space-evenly false
+          (label :text "NET" :style "color:#8888ff;")
+          (label :text ":")
+          (label :text {netcurrname})
+          (label :text "(${net}%, 󰁝 ${EWW_NET.wlan0.NET_UP / 1000 > 1000 ? "${round(EWW_NET.wlan0.NET_UP / 1000000, 1)}MB" : "${round(EWW_NET.wlan0.NET_UP / 1000, 1)}KB"} 󰁅 ${EWW_NET.wlan0.NET_DOWN / 1000 > 1000 ? "${round(EWW_NET.wlan0.NET_DOWN / 1000000, 1)}MB" : "${round(EWW_NET.wlan0.NET_DOWN / 1000, 1)}KB)"}")
+        )
+        (box :orientation "h" :spacing 20 :halign "start" :space-evenly false
+          (label :text "BAT" :style "color:#8888ff;")
+          (label :text ":")
+          (label :text "${round(EWW_BATTERY.total_avg, 2)}%")
+          (label :text {EWW_BATTERY.CMB0.status})
+        )
+        (box :orientation "h" :spacing 20 :halign "start" :space-evenly false
+          (label :text "CPU" :style "color:#8888ff;")
+          (label :text ":")
+          (label :text "${round(EWW_CPU.avg, 2)}%")
+          (label :text "${(EWW_TEMPS.CORETEMP_CORE_0 + EWW_TEMPS.CORETEMP_CORE_1) / 2}°C")
+        )
+        (box :orientation "h" :spacing 20 :halign "start" :space-evenly false
+          (label :text "MEM" :style "color:#8888ff;")
+          (label :text ":")
+          (label :text "${round(EWW_RAM.used_mem_perc, 2)}%")
+          (label :text "(${round((EWW_RAM.total_mem - EWW_RAM.available_mem) / 1000000000, 2)}GB / ${round(EWW_RAM.total_mem / 1000000000, 2)}GB)")
+        )
+      )
+      (box :orientation "v" :spacing 8 :class "pos"
+        (box :orientation "h" :space-evenly false :spacing 50
+          (label :text "SND" :hexpand false :style "color:#6666ff")
+          (scale :hexpand true :value soundlv :label "SND" :onchange "amixer sset Master {}%" :height 10 :min 0 :max 100)
+        )
+        (box :orientation "h" :space-evenly false :spacing 50
+          (label :text "BRT" :hexpand false :style "color: #6666ff")
+          (scale :hexpand true :value currentbrt :label "BRT" :onchange "brightnessctl set {}" :height 10 :min 1 :max maxbrt)
+        )
+      )
+    )
+  )
+)
+
+(defwidget sidedock_layout []
+  (centerbox :orientation "h"
+    (box :class "datetime" :space-evenly false :spacing 10 :halign "start" :hexpand true
+      (_time :timeicon "")
+      (_date :dateicon "")
+    )
+    (box :class "center" :space-evenly false :spacing 10 :halign "center"
+      (_cpu :cpuicon "󰻠")
+      (_mem :memicon "󰍛")
+      (_net :neticon "󰖩")
+      (_battery)
+    )
+    (box :class "end" :space-evenly false :spacing 10 :halign "end" :hexpand true
+      ;; (_bluetooth)
+      (_sound :sndint soundlv)
+      (revealer
+        :transition "none"
+	:reveal {updatecount != "0"}
+	(_updates)
+      )
+      (_power)
+    )
+  )
+)
+
+(defwidget _time [timeicon]
+  (box :space-evenly false :spacing 15 :class "pos" :valign "center"
+    (label :text timeicon :class "accent")
+    (label
+      :class "primary"
+      :text {time.hour >= 2 && time.hour <= 4 ? "Early Morning" :
+      time.hour <= 5 ? "Dawn" :
+      time.hour >= 6
+      && (time.hour <= 8 && time.min <= 59)
+      ? "Morning" :
+      time.hour >= 9
+      && (time.hour <= 11 && time.min <= 59)
+      ? "Late Morning" :
+      time.hour == 12 && time.min <= 29
+      ? "Midday" :
+      time.hour >= 12 && time.hour <= 16
+      ? "Afternoon" :
+      time.hour > 16 && time.hour <= 17
+      ? "Late Afternoon" :
+      (time.hour >= 17 && time.min <= 1)
+      || (time.hour <= 18 && time.min <= 20)
+      ? "Early Evening" :
+      time.hour >= 18 && time.hour <= 19
+      ? "Dusk" :
+      time.hour > 19 && time.hour <= 21
+      ? "Late Evening" :
+      time.hour > 21 ? "Night" : "Midnight"}
+    )
+    (label :text "${time.hour} : ${time.min}")
+  )
+)
+
+(defwidget _date [dateicon]
+  (box :space-evenly false :spacing 15 :class "pos" :valign "center"
+    (label :text dateicon :class "accent")
+    (label :text "${time.weekn}" :class "primary")
+    (label :text "${time.year} / ${time.month} / ${time.day}")
+  )
+)
+
+(defwidget _net [neticon]
+  (button :class "pos" :onclick "/home/psw/.local/bin/rofi-wifi-menu.sh &" :valign "center"
+    (box :space-evenly false :spacing 15 :valign "center"
+      (label :text neticon :class "accent")
+      (label :text "${net}%" :class "primary")
+      (label :text "󰁝 ${round(EWW_NET.wlan0.NET_UP / 1000, 1)}KB 󰁅 ${round(EWW_NET.wlan0.NET_DOWN / 1000, 1)}KB")
+    )
+  )
+)
+
+(defwidget _cpu [cpuicon]
+  (box :space-evenly false :spacing 15 :class "pos" :valign "center"
+    (label :text cpuicon :class "accent")
+    (label :text "${round(EWW_CPU.avg, 2)}%" :class "primary")
+    (label :text "${(EWW_TEMPS.CORETEMP_CORE_0 + EWW_TEMPS.CORETEMP_CORE_1) / 2}°C")
+  )
+)
+
+(defwidget _mem [memicon]
+  (box :space-evenly false :spacing 15 :class "pos" :valign "center"
+    (label :text memicon :class "accent")
+    ;; (label :text "${round(EWW_RAM.used_mem_perc, 2)}%" :class "primary")
+    (label :text "${round((EWW_RAM.total_mem - EWW_RAM.available_mem) / 1000000000, 2)}GB / ${round(EWW_RAM.total_mem / 1000000000, 2)}GB")
+  )
+)
+
+(defwidget _battery []
+  (button :class "pos" :onclick "systemsettings5 kcm_energyinfo &" :valign "center"
+    (box :space-evenly false :spacing 15 :valign "center"
+      (label :text {
+        EWW_BATTERY.CMB0.status == 'Charging' ? `󰂄`
+          : EWW_BATTERY.total_avg < 10 ? `󰁺`
+          : EWW_BATTERY.total_avg < 20 ? `󰁻`
+          : EWW_BATTERY.total_avg < 30 ? `󰁼`
+          : EWW_BATTERY.total_avg < 40 ? `󰁽`
+          : EWW_BATTERY.total_avg < 50 ? `󰁾`
+          : EWW_BATTERY.total_avg < 60 ? `󰁿`
+          : EWW_BATTERY.total_avg < 70 ? `󰂀`
+          : EWW_BATTERY.total_avg < 80 ? `󰂁`
+          : EWW_BATTERY.total_avg < 90 ? `󰂂`
+          : `󰁹`
+      } :class "accent")
+      ;; (label :text "${EWW_BATTERY.CMB0.status}" :class "primary")
+      (label :text "${round(EWW_BATTERY.total_avg, 2)}%")
+    )
+  )
+)
+
+(defwidget _bluetooth []
+  (button :class "pos" :onclick "systemsettings5 kcm_bluetooth &" :valign "center"
+    (box :space-evenly false :spacing 15 :valign "center"
+      (label :text "󰂯" :class "accent")
+      (label :text "BLUETOOTH")
+    )
+  )
+)
+
+(defwidget _sound [sndint]
+  (box :space-evenly false :spacing 15 :valign "center" :class "pos"
+    (button :onclick "systemsettings5 kcm_pulseaudio &" :valign "center"
+      (box :space-evenly false :spacing 15 :valign "center" ;; :onclick "systemsettings5 kcm_pulseaudio"
+        (label :text "󰕾" :class "accent")
+        ;; (label :text "${sndint}%" :class "primary")
+        (label :text "SOUND")
+      )
+    )
+    (scale :label "🔊" :value sndint :onchange "amixer sset Master {}%" :height 10 :min 0 :max 100)
+  )
+)
+
+(defwidget _power []
+  (box :space-evenly false :spacing 15 :valign "center" :class "pos"
+    (button :onclick "eww open powermenu" :valign "center"
+      (box :space-evenly false :spacing 15 :valign "center"
+        (label :text "󰐥" :class "power")
+	(label :text "MENU" :class "power")
+      )
+    )
+  )
+)
+
+(defwidget _updates []
+  (box :space-evely false :spacing 15 :valign "center" :class "pos"
+    (button :onclick "kitty --hold zsh -c \"sudo pacman -Syu && eww reload\" &" :valign "center"
+      (box :space-evenly false :spacing 15 :valign "center"
+        (label :text "" :class "accent")
+	(label :text updatecount :class "primary")
+      )
+    )
+  )
+)
