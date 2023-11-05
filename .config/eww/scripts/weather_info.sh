@@ -9,8 +9,8 @@ cache_weather_hex=${cache_dir}/weather-hex
 cache_weather_icon=${cache_dir}/weather-icon
 
 ## Weather data
-KEY="APIKEY"
-ID="1843561" # south korea id
+KEY="API_KEY"
+ID="1843561"
 UNIT="metric"	# Available options : 'metric' or 'imperial'
 
 ## Make cache dir
@@ -70,19 +70,19 @@ get_weather_data() {
 			weather_quote="It's a cloudy night \nHow about some hot chocolate and a warm bed?"
 			weather_hex="#adadff"
 		elif [ "$weather_icon_code" == "09d"  ]; then
-			weather_icon=" "
+			weather_icon="󰖗 "
 			weather_quote="It's rainy, it's a great day! \nGet some ramen and watch as the rain falls..."
 			weather_hex="#6b95ff"
 		elif [ "$weather_icon_code" == "09n"  ]; then
-			weather_icon=" "
+			weather_icon="󰖗 "
 			weather_quote=" It's gonna rain tonight it seems \nMake sure your clothes aren't still outside..."
 			weather_hex="#6b95ff"
 		elif [ "$weather_icon_code" == "10d"  ]; then
-			weather_icon=" "
+			weather_icon="󰖗 "
 			weather_quote="It's rainy, it's a great day! \nGet some ramen and watch as the rain falls..."
 			weather_hex="#6b95ff"
 		elif [ "$weather_icon_code" == "10n"  ]; then
-			weather_icon=" "
+			weather_icon="󰖗 "
 			weather_quote=" It's gonna rain tonight it seems \nMake sure your clothes aren't still outside..."
 			weather_hex="#6b95ff"
 		elif [ "$weather_icon_code" == "11d"  ]; then

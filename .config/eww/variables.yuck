@@ -30,6 +30,16 @@
   `checkupdates | wc -l`
 )
 
+(defvar wifidiag false)
+
+(defpoll NETCONSTAT :interval "5s" :run-while wifidiag
+  `./scripts/getWifiList.sh current constat`
+)
+
+(defpoll WIFILIST :interval "5s" :run-while wifidiag
+  `./scripts/getWifiList.sh all name`
+)
+
 (defpoll ICON :interval "15m" `./scripts/weather_info.sh --icon`)
 (defpoll STAT :interval "15m" `./scripts/weather_info.sh --stat`)
 (defpoll TEMP :interval "15m" `./scripts/weather_info.sh --temp`)

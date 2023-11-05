@@ -72,6 +72,66 @@
   (new_bg_layout)
 )
 
+(defvar selectedwifi "")
+(defvar wifiquitcmd "eww update wifidiag=false & eww close wifidiag")
+
+(defwindow wifidiag
+  :monitor 0
+  :stacking "fg"
+  :exclusive false
+  :focusable false
+  :namespace "wifidiag"
+  :geometry (geometry :anchor "center")
+  (box :class "diag" :orientation "v" :space-evenly false :spacing 30
+    (button :onclick "nmcli radio wifi ${NETCONSTAT =~ "enabled" ? "off" : "on"} & notify-send --app-name=WiFi --icon=/home/psw/.config/eww/assets/wifi-high-fill.svg WiFi '${NETCONSTAT =~ "enabled" ? "WiFi Disabled" : "WiFi Enabled"}' & ${wifiquitcmd}" :style "font-size: 20px;"
+      (label :text {NETCONSTAT =~ "enabled" ? "󰖪  Disable Wi-Fi" : "󰖩  Enable Wi-Fi"})
+    )
+    ;;(scroll :vscroll true :height 100 :width 300 ;; wtf it's not comfortable for me
+      (box :orientation "v" :halign "start" :hexpand true
+        (for wifi in {captures(WIFILIST, '( .+)')}
+          (button :onclick "eww update selectedwifi='${wifi[0]}'" :class "${selectedwifi == wifi[0] ? "selected" : ""}" :style "padding: 0 10px;font-size: 16px;" :halign "fill"
+            (label :text {replace(wifi[0], ' ', '') == "${netcurrname} " ? replace(wifi[0], ' ', ' ') : wifi[0]} :halign "start")
+          )
+        )
+        (label :text "Loading.." :visible {WIFILIST == "" && NETCONSTAT =~ "enabled"} :halign "center" :xalign 0.5 :hexpand true :justify "center")
+      )
+    ;;)
+    (box :orientation "v" :space-evenly false :spacing 0
+      (button :onclick {wifiquitcmd}
+        (label :text "Cancel")
+      )
+      (button 
+        :onclick "${wifiquitcmd} & ./scripts/getWifiList.sh con down '${selectedwifi}'"
+        :visible {replace(selectedwifi, ' ', '') == "${netcurrname} "} 
+        (label :text "Disconnect")
+      )
+      (button 
+        :onclick "${wifiquitcmd} & ./scripts/getWifiList.sh con up '${selectedwifi}'"
+        :visible {replace(selectedwifi, ' ', '') == "${netcurrname} "}
+        (label :text "Reconnect")
+      )
+      (button 
+        :onclick "${wifiquitcmd} & ./scripts/getWifiList.sh con up '${selectedwifi}'"
+        :visible {replace(selectedwifi, ' ', '') != "${netcurrname} "}
+        (label :text "Connect")
+      )
+    )
+  )
+)
+
+(defwindow wifipassdiag
+  :monitor 0
+  :stacking "fg"
+  :exclusive false
+  :focusable true
+  :namespace "wifipassdiag"
+  :geometry (geometry :anchor "center")
+  (box :class "diag" :orientation "h" :space-evenly false :spacing 4
+    (label :text "Password for ${selectedwifi}")
+    (input :password true :onaccept "./scripts/getWifiList.sh con upp '${selectedwifi}' '{}' & eww close wifipassdiag")
+  )
+)
+
 (defwidget new_bg_layout []
   (box :class "sidedock" :space-evenly false :spacing 10
     (box :orientation "v" :spacing 4 :space-evenly false
@@ -109,14 +169,15 @@
       (box :orientation "h" :spacing 4
         (button
           :class "pos"
-          :onclick "/home/psw/.local/bin/rofi-wifi-menu.sh &"
+          ; /home/psw/.local/bin/rofi-wifi-menu.sh &
+          :onclick "eww update wifidiag=true & eww open wifidiag"
           (circular-progress :value net :width 50 :height 50 :thickness 8 :valign "center" :halign "center" :start-at 25
             (label :text "" :class "image" :style "background-image:url('./assets/wifi-high-fill.svg')")
           )
         )
         (button
           :class "pos"
-          :onclick "notify-send --app-name=Battery --icon=/home/psw/.config/eww/assets/battery.svg Battery '${round(EWW_BATTERY.total_avg, 0)}%, ${EWW_BATTERY.CMB0.status}'"
+          :onclick "Exec=env QT_QPA_PLATFORM=wayland /usr/sbin/lmt-config-gui & notify-send --app-name=Battery --icon=/home/psw/.config/eww/assets/battery.svg Battery '${round(EWW_BATTERY.total_avg, 0)}%, ${EWW_BATTERY.CMB0.status}'"
           (circular-progress :value {EWW_BATTERY.total_avg} :width 50 :height 50 :thickness 8 :valign "center" :halign "center" :start-at 25 :style "color: ${EWW_BATTERY.CMB0.status == "Discharging" ? EWW_BATTERY.total_avg > 75 ? "#aaffaa" : EWW_BATTERY.total_avg > 50 ? "#ffff66" : EWW_BATTERY.total_avg > 25 ? "#cc8822" : "#ff6666" : EWW_BATTERY.CMB0.status == "Charging" ? "#00ff00" : "#ffffff"}"
             (label :text "" :class "image" :style "background-image:url('./assets/battery.svg')")
           )
@@ -174,7 +235,7 @@
       (box :class "pos"
         (box :orientation "v" :spacing 10 :space-evenly false
           (box :orientation "h" :style "padding: 0 20px;"
-            (label :halign "start" :style "color: ${HEX};font-size:36px;" :text ICON)
+            (label :halign "start" :style "color: ${HEX};font-size:36px;font-weight:normal;font-family: Iosevka Nerd Font;" :text ICON)
             (label :halign "center" :style "color: ${HEX};font-size: 36px;" :text STAT)
             (label :halign "end" :style "color: ${HEX};font-size:36px;" :text TEMP)
           )
