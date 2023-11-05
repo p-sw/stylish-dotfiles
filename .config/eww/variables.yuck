@@ -40,6 +40,8 @@
   `./scripts/getWifiList.sh all name`
 )
 
+(defpoll SPOTIFY_PID :interval "1s" `pidof -s spotify || pidof -s .spotify-wrapped | echo -1`)
+
 (defpoll ICON :interval "15m" `./scripts/weather_info.sh --icon`)
 (defpoll STAT :interval "15m" `./scripts/weather_info.sh --stat`)
 (defpoll TEMP :interval "15m" `./scripts/weather_info.sh --temp`)
@@ -47,6 +49,6 @@
 (defpoll QUOTE :interval "15m" `./scripts/weather_info.sh --quote`)
 (defpoll QUOTE2 :interval "15m" `./scripts/weather_info.sh --quote2`)
 
-(defpoll SPOTIFY_TITLE :interval "5s" "./scripts/sp attr title")
-(defpoll SPOTIFY_ARTIST :interval "5s" "./scripts/sp attr artist")
-(defpoll SPOTIFY_ARTFILE :interval "5s" "./scripts/sp getart")
+(defpoll SPOTIFY_TITLE :interval "5s" :run-while {SPOTIFY_PID != "-1"} "./scripts/sp attr title")
+(defpoll SPOTIFY_ARTIST :interval "5s" :run-while {SPOTIFY_PID != "-1"} "./scripts/sp attr artist")
+(defpoll SPOTIFY_ARTFILE :interval "5s" :run-while {SPOTIFY_PID != "-1"} "./scripts/sp getart")

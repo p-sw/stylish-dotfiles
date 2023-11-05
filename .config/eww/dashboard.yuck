@@ -295,7 +295,7 @@
           )
         )
       )
-      (box :orientation "v" :space-evenly false :halign "fill" :spacing 10 :class "pos"
+      (box :orientation "v" :space-evenly false :halign "fill" :spacing 10 :class "pos" :visible {SPOTIFY_PID != "-1"}
         (image 
           :style "background-image:url('${SPOTIFY_ARTFILE}');" 
           :class "image bordered"
