@@ -29,7 +29,7 @@ $accent: #5b81be;
   color: $text;
   font-family: Koulen;
   font-size: 1.3em;
-  padding: 30px;
+  padding: 50px;
 
   .accent {
     color: $accent;
@@ -56,7 +56,7 @@ $accent: #5b81be;
   }
 
   .pos {
-    background-color: $background;
+    background-color: rgba($background, 0.8);
     padding: 1em 1em;
     border-radius: 10px;
     transition: all ease-out;

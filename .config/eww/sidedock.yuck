@@ -133,9 +133,9 @@
 )
 
 (defwidget new_bg_layout []
-  (box :class "sidedock" :space-evenly false :spacing 10
-    (box :orientation "v" :spacing 4 :space-evenly false
-      (box :class "pos" :space-evenly false :orientation "v" :valign "center"
+  (centerbox :orientation "h" :class "sidedock"
+    (box :orientation "v" :spacing 4 :space-evenly false :halign "start"
+      (box :class "pos" :space-evenly false :orientation "v" :valign "center" :halign "fill"
         (image 
           :valign "center" 
           :halign "center" 
@@ -149,24 +149,8 @@
         (label :text "@pswkr" :xalign 0.5 :yalign 0 :style "font-size: 1em;opacity:0.6;" :valign "center")
         (label :text "Shinwoo PARK" :xalign 0.5 :yalign 1 :style "font-size: 2.5em;" :valign "center")
       )
-      (box :orientation "h" :spacing 4
-        (button
-          :class "pos"
-          :onclick "eww open poweroffdiag"
-          (label :text "󰐥" :style "color:#ff6666;font-size:1.5em;")
-        )
-        (button
-          :class "pos"
-          :onclick "eww open rebootdiag"
-          (label :text "󰜉" :style "font-size:1.5em;")
-        )
-        (button
-          :class "pos"
-          :onclick "eww open logoutdiag"
-          (label :text "󰍃" :style "font-size:1.5em;")
-        )
-      )
-      (box :orientation "h" :spacing 4
+      
+      (box :orientation "h" :spacing 4 :halign "fill"
         (button
           :class "pos"
           ; /home/psw/.local/bin/rofi-wifi-menu.sh &
@@ -183,7 +167,7 @@
           )
         )
       )
-      (box :orientation "h" :spacing 4
+      (box :orientation "h" :spacing 4 :halign "fill"
         (button
           :class "pos"
           :onclick "notify-send --app-name=CPU --icon=/home/psw/.config/eww/assets/cpu-chip-solid.svg 'CPU Status' '${round(EWW_CPU.avg, 2)}%, ${(EWW_TEMPS.CORETEMP_CORE_0 + EWW_TEMPS.CORETEMP_CORE_1) / 2}°C'"
@@ -199,14 +183,14 @@
           )
         )
       )
-      (box :orientation "v" :spacing 10 :class "pos" :space-evenly false
-        (label :text "${time.weekn}  ${time.year} / ${time.month} / ${time.day}" :style "font-size:1.5rem;font-weight:500;")
+      (box :orientation "v" :spacing 10 :class "pos" :space-evenly false :halign "fill"
+        (label :text "${time.weekn}  ${time.year} / ${time.month} / ${time.day}" :style "font-size:1.5rem;font-weight:500;" :hexpand false)
         (box :orientation "h" :spacing 20 :space-evenly false :hexpand true :halign "center"
           (label :text {time.hour} :style "font-size:4rem;font-weight:900;")
           (label :text ":" :style "font-size:2rem;font-weight:900;")
           (label :text {time.min} :style "font-size:4rem;font-weight:900;")
         )
-        (label :text {time.hour >= 2 && time.hour <= 4 ? "Early Morning" :
+        (label :hexpand false :text {time.hour >= 2 && time.hour <= 4 ? "Early Morning" :
           time.hour <= 5 ? "Dawn" :
           time.hour >= 6
           && (time.hour <= 8 && time.min <= 59)
@@ -232,7 +216,7 @@
           :xalign 0.5
         )
       )
-      (box :class "pos"
+      (box :class "pos" :halign "center"
         (box :orientation "v" :spacing 10 :space-evenly false
           (box :orientation "h" :style "padding: 0 20px;"
             (label :halign "start" :style "color: ${HEX};font-size:36px;font-weight:normal;font-family: Iosevka Nerd Font;" :text ICON)
@@ -246,10 +230,9 @@
         )
       )
     )
-    (box)
-    (box)
-    (box :orientation "v" :space-evenly false :spacing 4 :width 400
-       (box :orientation "v" :space-evenly false :spacing 8 :class "pos"
+    (box :width 500)
+    (box :orientation "v" :space-evenly false :spacing 4 :halign "end"    
+       (box :orientation "v" :space-evenly false :spacing 8 :class "pos" :halign "end"
         (box :orientation "h" :spacing 20 :halign "start" :space-evenly false
           (label :text "NET" :style "color:#8888ff;")
           (label :text ":")
@@ -275,14 +258,31 @@
           (label :text "(${round((EWW_RAM.total_mem - EWW_RAM.available_mem) / 1000000000, 2)}GB / ${round(EWW_RAM.total_mem / 1000000000, 2)}GB)")
         )
       )
-      (box :orientation "v" :spacing 8 :class "pos"
-        (box :orientation "h" :space-evenly false :spacing 50
+      (box :orientation "v" :spacing 8 :class "pos" :halign "fill"
+        (box :orientation "h" :space-evenly false :spacing 50 :halign "fill"
           (label :text "SND" :hexpand false :style "color:#6666ff")
           (scale :hexpand true :value soundlv :label "SND" :onchange "amixer sset Master {}%" :height 10 :min 0 :max 100)
         )
-        (box :orientation "h" :space-evenly false :spacing 50
+        (box :orientation "h" :space-evenly false :spacing 50 :halign "fill"
           (label :text "BRT" :hexpand false :style "color: #6666ff")
           (scale :hexpand true :value currentbrt :label "BRT" :onchange "brightnessctl set {}" :height 10 :min 1 :max maxbrt)
+        )
+      )
+      (box :orientation "h" :spacing 4
+        (button
+          :class "pos"
+          :onclick "eww open poweroffdiag"
+          (label :text "󰐥" :style "color:#ff6666;font-size:1.5em;")
+        )
+        (button
+          :class "pos"
+          :onclick "eww open rebootdiag"
+          (label :text "󰜉" :style "font-size:1.5em;")
+        )
+        (button
+          :class "pos"
+          :onclick "eww open logoutdiag"
+          (label :text "󰍃" :style "font-size:1.5em;")
         )
       )
     )
