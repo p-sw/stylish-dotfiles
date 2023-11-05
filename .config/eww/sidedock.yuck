@@ -237,7 +237,8 @@
           (label :text "NET" :style "color:#8888ff;")
           (label :text ":")
           (label :text {netcurrname})
-          (label :text "(${net}%, 󰁝 ${EWW_NET.wlan0.NET_UP / 1000 > 1000 ? "${round(EWW_NET.wlan0.NET_UP / 1000000, 1)}MB" : "${round(EWW_NET.wlan0.NET_UP / 1000, 1)}KB"} 󰁅 ${EWW_NET.wlan0.NET_DOWN / 1000 > 1000 ? "${round(EWW_NET.wlan0.NET_DOWN / 1000000, 1)}MB" : "${round(EWW_NET.wlan0.NET_DOWN / 1000, 1)}KB)"}")
+          (label :width 270 :xalign 0 :text "(${net}%, 󰁝 ${EWW_NET.wlan0.NET_UP / 1000 > 1000 ? "${round(EWW_NET.wlan0.NET_UP / 1000000, 1)}MB" : "${round(EWW_NET.wlan0.NET_UP / 1000, 1)}KB"} 󰁅 ${EWW_NET.wlan0.NET_DOWN / 1000 > 1000 ? "${round(EWW_NET.wlan0.NET_DOWN / 1000000, 1)}MB" : "${round(EWW_NET.wlan0.NET_DOWN / 1000, 1)}KB)"}")
+          ;; (label :width 270 :text "(100%, 󰁝 1234.8KB 󰁅 1234.8KB)")
         )
         (box :orientation "h" :spacing 20 :halign "start" :space-evenly false
           (label :text "BAT" :style "color:#8888ff;")
