@@ -10,13 +10,13 @@ $accent: #5b81be;
 }
 
 .diag {
-  background-color: $background;
+  background-color: rgba($background, 0.5);
   border: 2px solid $accent;
   padding: 20px 50px;
-  border-radius: 20px;
+  border-radius: 10px;
 
   .selected {
-    background-color: rgba($primary, 0.5);
+    background-color: rgba($secondary, 0.5);
   }
 
   button {
@@ -24,7 +24,7 @@ $accent: #5b81be;
   }
 
   button:hover {
-    background-color: rgba($primary, 0.2);
+    background-color: rgba($secondary, 0.2);
   }
 }
 
