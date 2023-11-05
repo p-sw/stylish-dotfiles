@@ -1,4 +1,4 @@
 (include "./variables.yuck")
 
-(include "./sidedock.yuck")
+(include "./dashboard.yuck")
 (include "./powermenu.yuck")

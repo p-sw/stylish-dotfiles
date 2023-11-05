@@ -28,12 +28,14 @@ $accent: #5b81be;
   }
 }
 
-.sidedock {
-  background-color: transparent;
+.dashboard {
   color: $text;
   font-family: Koulen;
   font-size: 1.3em;
   padding: 50px;
+  background-image: url('./assets/wallpaper.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
 
   .accent {
     color: $accent;
