@@ -1,0 +1,25 @@
+(defvar lastactive_workspace
+  0
+)
+(defvar rawspace
+  false
+)
+(defvar panichovered
+  false
+)
+
+(defwindow bar
+  :monitor 0
+  :stacking "fg"
+  :exclusive false
+  :focusable false
+  :namespace "bar"
+  :class "bg-transparent"
+  :geometry (geometry :width "80%" :height "20px" :y "5px" :anchor "top center")
+  (box :class "bar" :halign "start" :valign "center" :style "padding: 0 10px" :orientation "h" :spacing 3 :space-evenly false
+    (button :class "panic ${rawspace ? "active" : ""}" :height 10 :vexpand false :onclick {rawspace ? "hyprctl dispatch workspace ${lastactive_workspace} && eww update rawspace=false" : "eww update lastactive_workspace=$(hyprctl activeworkspace | head --lines=+1 | cut -d' ' -f3) && eww update rawspace=true && hyprctl dispatch workspace 11"})
+    (for n in "[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]"
+      (box :class "workspacer ${activeworkspace == n ? "active" : ""}" :width 10 :height 10)
+    )
+  )
+)
