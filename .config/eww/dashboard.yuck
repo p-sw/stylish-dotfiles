@@ -218,7 +218,7 @@
       )
       (box :class "pos" :halign "start"
         (box :orientation "v" :spacing 10 :space-evenly false :halign "center"
-          (box :orientation "h" :style "padding: 0 20px;" :space-evenly false :spacing 50
+          (centerbox :orientation "h" :style "padding: 0 20px;" :space-evenly false :spacing 50
             (label :halign "start" :style "color: ${HEX};font-size:36px;font-weight:normal;font-family: Iosevka Nerd Font;" :text ICON)
             (label :halign "center" :style "color: ${HEX};font-size: 36px;" :text STAT)
             (label :halign "end" :style "color: ${HEX};font-size:36px;" :text TEMP)
