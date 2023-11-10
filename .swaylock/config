@@ -16,7 +16,7 @@ ring-ver-color=4467a0
 inside-ver-color=4467a066
 
 ring-clear-color=66ff66
-inside-ver-color=66ff6666
+inside-clear-color=66ff6666
 
 ring-wrong-color=ff6666
 inside-wrong-color=ff666666
@@ -30,5 +30,3 @@ grace-no-mouse
 grace-no-touch
 text-color=ffffff
 ignore-empty-password
-daemonize
-
