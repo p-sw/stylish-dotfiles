@@ -1,5 +1,5 @@
 #!/bin/bash
-sudo apt update && sudo apt upgrade
+sudo apt update -y && sudo apt upgrade -y
 
 curl -sS https://starship.rs/install.sh | sh
 git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh/zsh-autosuggestions
