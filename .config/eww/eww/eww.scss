@@ -1,0 +1,192 @@
+$text: #f8f9fc;
+$background: #0f1724;
+$primary: #6689c2;
+$secondary: #162237;
+$accent: #5b81be;
+
+* {
+  all: unset;
+  font-family: Koulen;
+}
+
+.diag {
+  background-color: rgba($background, 0.5);
+  border: 2px solid $accent;
+  padding: 20px 50px;
+  border-radius: 10px;
+
+  .selected {
+    background-color: rgba($secondary, 0.5);
+  }
+
+  button {
+    border-radius: 10px;
+  }
+
+  button:hover {
+    background-color: rgba($secondary, 0.2);
+  }
+}
+
+.dashboard {
+  color: $text;
+  font-family: Koulen;
+  font-size: 1.3em;
+  padding: 50px;
+  background-image: url('./assets/wallpaper.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  .accent {
+    color: $accent;
+  }
+
+  .text {
+    color: $text;
+  }
+
+  .primary {
+    color: $primary;
+  }
+
+  .secondary {
+    color: $secondary;
+  }
+
+  .power {
+    color: #ff6666;
+  }
+
+  .layout {
+    padding: 0 0em;
+  }
+
+  .pos {
+    background-color: rgba($background, 0.8);
+    padding: 1em 1em;
+    border-radius: 10px;
+    transition: all ease-out;
+    transition-duration: 0.2s;
+  }
+
+  button.pos:hover {
+    background-color: rgba($background, 0.9);
+    transition: all ease-out;
+    transition-duration: 0.2s;
+  }
+
+  circular-progress {
+    color: #fff;
+    background-color: rgba(#fff, 0.1);
+  }
+
+  .image {
+    border-radius: 99999px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-clip: border-box;
+    background-size: cover;
+  }
+
+  scale trough highlight {
+    all: unset;
+    background-color: $accent;
+    color: #000000;
+    border-radius: 20px;
+  }
+
+  scale trough {
+    all: unset;
+    background-color: $secondary;
+    border-radius: 6px;
+    min-height: 18px;
+    min-width: 80px;
+  }
+}
+
+.bar {
+  background-color: $background;
+  border-radius: 9999px;
+
+  .panic {
+    background-color: rgba(#fff, 0.2);
+    border-radius: 9999px;
+    min-width: 40px;
+
+    &.active {
+      background-color: #fff;
+    }
+
+    &:hover {
+      background-color: rgba(#fff, 0.7);
+    }
+  }
+
+  .workspacer {
+    background-color: rgba(#fff, 0.5);
+    border-radius: 9999px;
+
+    &.active {
+      background-color: #fff;
+    }
+  }
+}
+
+.musicwidget {
+  background-color: $background;
+  border-radius: 10px;
+
+  font-family: 'Pretendard';
+
+  .image {
+    border-radius: 99999px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-clip: border-box;
+    background-size: cover;
+  }
+
+  label {
+    font-family: 'Pretendard';
+    font-size: 24px;
+    font-weight: 900;
+  }
+
+  progress>through {
+    min-width: 200px;
+    min-height: 2px;
+    background-color: $secondary;
+  }
+
+  progress {
+    background-color: $primary;
+  }
+
+
+  scale trough highlight {
+    all: unset;
+    background-color: $accent;
+    color: #000000;
+    border-radius: 20px;
+  }
+
+  scale trough {
+    all: unset;
+    background-color: $secondary;
+    border-radius: 6px;
+    min-height: 2px;
+    min-width: 20px;
+  }
+
+  button label {
+    font-size: 30px;
+  }
+
+  .ctlimage {
+    border-radius: 99999px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-clip: border-box;
+    background-size: 75px;
+  }
+}
