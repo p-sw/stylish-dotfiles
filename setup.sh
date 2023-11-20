@@ -1,7 +1,7 @@
 #!/bin/bash
 sudo apt update -y && sudo apt upgrade -y
 
-curl -sS https://starship.rs/install.sh | sh
+curl -sS https://starship.rs/install.sh | sh --yes
 git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh/zsh-autosuggestions
 echo "
 plugins=(git)
