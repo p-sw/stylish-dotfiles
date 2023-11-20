@@ -8,5 +8,5 @@ plugins=(git)
 DISABLE_AUTO_UPDATE=true
 DISABLE_UPDATE_PROMPT=true
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
-eval "$(starship init zsh)" > $HOME/.zshrc
+eval \"$(starship init zsh)\"" > $HOME/.zshrc
 cp ./.config/starship.toml $HOME/.config/starship.toml
