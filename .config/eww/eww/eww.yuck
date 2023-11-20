@@ -1,4 +1,0 @@
-(include "./variables.yuck")
-
-(include "./dashboard.yuck")
-(include "./bar.yuck")

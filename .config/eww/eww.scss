@@ -131,3 +131,62 @@ $accent: #5b81be;
     }
   }
 }
+
+.musicwidget {
+  background-color: $background;
+  border-radius: 10px;
+
+  font-family: 'Pretendard';
+
+  .image {
+    border-radius: 99999px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-clip: border-box;
+    background-size: cover;
+  }
+
+  label {
+    font-family: 'Pretendard';
+    font-size: 24px;
+    font-weight: 900;
+  }
+
+  progress>through {
+    min-width: 200px;
+    min-height: 2px;
+    background-color: $secondary;
+  }
+
+  progress {
+    background-color: $primary;
+  }
+
+
+  scale trough highlight {
+    all: unset;
+    background-color: $accent;
+    color: #000000;
+    border-radius: 20px;
+  }
+
+  scale trough {
+    all: unset;
+    background-color: $secondary;
+    border-radius: 6px;
+    min-height: 2px;
+    min-width: 20px;
+  }
+
+  button label {
+    font-size: 30px;
+  }
+
+  .ctlimage {
+    border-radius: 99999px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-clip: border-box;
+    background-size: 75px;
+  }
+}

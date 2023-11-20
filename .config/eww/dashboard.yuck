@@ -218,9 +218,9 @@
       )
       (box :class "pos" :halign "start"
         (box :orientation "v" :spacing 10 :space-evenly false :halign "center"
-          (centerbox :orientation "h" :style "padding: 0 20px;" :space-evenly false :spacing 50
+          (centerbox :orientation "h" :style "padding: 0 20px;" :space-evenly false
             (label :halign "start" :style "color: ${HEX};font-size:36px;font-weight:normal;font-family: Iosevka Nerd Font;" :text ICON)
-            (label :halign "center" :style "color: ${HEX};font-size: 36px;" :text STAT)
+            (label :halign "center" :style "color: ${HEX};font-size: 36px;padding: 0 20px;" :text STAT)
             (label :halign "end" :style "color: ${HEX};font-size:36px;" :text TEMP)
           )
           (box :orientation "v" :spacing 0 :halign "center" :space-evenly false 
@@ -238,7 +238,7 @@
           (label :text ":" :vexpand true :valign "start")
           (box :orientation "v" :space-evenly false :spacing 2 :halign "end"
             (label :text {netcurrname} :limit-width 20 :halign "start")
-            (label :width 270 :xalign 0 :text "(${net}%, 󰁝 ${EWW_NET.wlan0.NET_UP / 1000 > 1000 ? "${round(EWW_NET.wlan0.NET_UP / 1000000, 1)}MB" : "${round(EWW_NET.wlan0.NET_UP / 1000, 1)}KB"} 󰁅 ${EWW_NET.wlan0.NET_DOWN/ 1000 > 1000 ? "${round(EWW_NET.wlan0.NET_DOWN / 1000000, 1)}MB" : "${round(EWW_NET.wlan0.NET_DOWN / 1000, 1)}KB)"}")
+            (label :width 270 :xalign 0 :text "(${net}%, 󰁝 ${EWW_NET.wlan0.NET_UP / 1000 > 1000 ? "${round(EWW_NET.wlan0.NET_UP / 1000000, 1)}MB" : "${round(EWW_NET.wlan0.NET_UP / 1000, 1)}KB"} 󰁅 ${EWW_NET.wlan0.NET_DOWN/ 1000 > 1000 ? "${round(EWW_NET.wlan0.NET_DOWN / 1000000, 1)}MB" : "${round(EWW_NET.wlan0.NET_DOWN / 1000, 1)}KB"})")
           )
         )
         (box :orientation "h" :spacing 20 :halign "start" :space-evenly false
@@ -293,43 +293,6 @@
           (box :orientation "h" :space-evenly false :halign "center" :spacing 10 
             (label :text '󰚰' :style "font-size:1.5em;")
             (label :text updatecount :style "font-size:1em;")
-          )
-        )
-      )
-      (box :orientation "v" :space-evenly false :halign "fill" :spacing 10 :class "pos" :visible {SPOTIFY_PID != "-1"}
-        (image 
-          :style "background-image:url('${SPOTIFY_ARTFILE}');" 
-          :class "image bordered"
-          :path {SPOTIFY_ARTFILE}
-          :width 125
-          :height 125
-          :image-width 125
-          :image-height 125
-          :valign "center"
-          :halign "center"
-        )
-        (box :orientation "v" :space-evenly false :spacing 10
-          (label :text SPOTIFY_TITLE :style "font-family:Pretendard;font-size:1em;font-weight:800;" :limit-width 35)
-          (label :text SPOTIFY_ARTIST :style "font-family:Pretendard;font-size:0.8em;font-weight:400;opacity:0.6")
-        )
-        (box :orientation "h" :space-evenly false :spacing 20 :halign "center"
-          (button
-            :onclick "./scripts/sp prev"
-            :width 100
-            :height 100
-            (label :text "" :class "image" :style "background-image:url('./assets/skip-previous.svg');")
-          )
-          (button
-            :onclick "./scripts/sp play"
-            :width 100
-            :height 100
-            (label :text "" :class "image" :style "background-image:url('./assets/pause.svg');")
-          )
-          (button
-            :onclick "./scripts/sp next"
-            :width 100
-            :height 100
-            (label :text "" :class "image" :style "background-image:url('./assets/skip-next.svg');")
           )
         )
       )
