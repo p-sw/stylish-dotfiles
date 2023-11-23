@@ -4,14 +4,43 @@ format = '''(
 [](bold white)
 [●](bold white) $username@$hostname :$directory $os(
 [●](bold white) $git_branch$git_status $git_commit $git_metrics $git_state)
-$character$sudo '''
+$character '''
 
 scan_timeout = 10
 add_newline = false
 
 [os]
-format = '\([$name]($style)\)'
+format = '\([$symbol( $codename)( $edition Edition)( Ver. $version)]($style)\)'
 disabled = false
+
+[os.symbols]
+Arch = "󰣇"
+Ubuntu = ""
+Alpine = ""
+Amazon = ""
+CentOS = ""
+Android = ""
+Artix = ""
+Debian = ""
+EndeavourOS = ""
+Fedora = ""
+FreeBSD = ""
+Garuda = ""
+Gentoo = ""
+Illumos = ""
+Linux = ""
+Macos = "󰇄"
+Manjaro = ""
+Mint = "󰣭"
+NixOS = "󱄅"
+OpenBSD = ""
+openSUSE = ""
+Pop = ""
+Raspbian = ""
+Redhat = "󱄛"
+RedHatEnterprise = "󱄛"
+Solus = ""
+
 
 [character]
 success_symbol = '[○](bold green)'
