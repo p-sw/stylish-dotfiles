@@ -68,7 +68,17 @@
   :exclusive false
   :focusable false
   :namespace "dashboard"
-  :geometry (geometry :width "100%" :height "100%" :x "0px" :y: "0px" :anchor "center")
+  :geometry (geometry :width "100%" :height "100%" :x "0px" :y "0px" :anchor "center")
+  (new_bg_layout)
+)
+
+(defwindow dashboard_1
+  :monitor 1
+  :stacking "bg"
+  :exclusive false
+  :focusable false
+  :namespace "dashboard_1"
+  :geometry (geometry :width "100%" :height "100%" :x "0px" :y "0px" :anchor "center")
   (new_bg_layout)
 )
 

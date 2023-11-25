@@ -11,19 +11,34 @@
 (defwindow bar
   :monitor 0
   :stacking "fg"
-  :exclusive false
+  :exclusive true
   :focusable false
   :namespace "bar"
   :class "bg-transparent"
-  :geometry (geometry :width "80%" :height "20px" :y "5px" :anchor "top center")
-  (box :class "bar" :valign "center" :style "padding: 0 10px" :orientation "h" :hexpand true
+  :geometry (geometry :width "80%" :heigth "0px" :y "5px" :anchor "top center")
+  (bar_layout :lister "[1, 2, 3, 4, 5, 6, 7, 8, 9, 0]" :opener "music")
+)
+
+(defwindow bar_1
+  :monitor 1
+  :stacking "fg"
+  :exclusive true
+  :focusable false
+  :namespace "bar_1"
+  :class "bg-transparent"
+  :geometry (geometry :width "80%" :height "0px" :y "5px" :anchor "top center")
+  (bar_layout :lister "[11, 12, 13, 14, 15, 16, 17, 18, 19, 10]" :opener "music_1")    
+)
+
+(defwidget bar_layout [lister opener]
+  (box :class "bar" :valign "center" :style "padding: 0 10px" :orientation "h" :hexpand true :vexpand true :height 30
     (box :halign "start" :valign "center" :orientation "h" :spacing 3 :space-evenly false
       (button :class "panic ${rawspace ? "active" : ""}" :height 10 :vexpand false :onclick {rawspace ? "hyprctl dispatch workspace ${lastactive_workspace} && eww update rawspace=false" : "eww update lastactive_workspace=$(hyprctl activeworkspace | head --lines=+1 | cut -d' ' -f3) && eww update rawspace=true && hyprctl dispatch workspace 11"})
-      (for n in "[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]"
+      (for n in lister
         (box :class "workspacer ${activeworkspace == n ? "active" : ""}" :width 10 :height 10)
       )
     )
-    (eventbox :halign "center" :valign "center" :orientation "h" :spacing 3 :space-evenly false :onclick "eww open music" :visible {SPOTIFY_PID != "-1"}
+    (eventbox :halign "center" :valign "center" :orientation "h" :spacing 3 :space-evenly false :onclick "eww open ${opener}" :visible {SPOTIFY_PID != "-1"}
       (label :text {SPOTIFY_TITLE + ' - ' + SPOTIFY_ARTIST} :style "font-family:'Pretendard';font-size:12px;font-weight:900;")
     )
     (box :halign "end" :valign "center" :orientation "h" :spacing 3 :space-evenly false
@@ -41,6 +56,20 @@
   :focusable false
   :namespace "music"
   :geometry (geometry :width "600px" :height "150px" :x "660px" :y "30px")
+  (music_layout)
+)
+
+(defwindow music_1
+  :monitor 1
+  :stacking "fg"
+  :exclusive false
+  :focusable false
+  :namespace "music"
+  :geometry (geometry :width "600px" :height "150px" :x "660px" :y "30px")
+  (music_layout)
+)
+
+(defwidget music_layout []
   (eventbox :onhoverlost "eww close music" :class "musicwidget"
     (box :vexpand true :hexpand true :style "padding: 25px;" :space-evenly false
        (image
