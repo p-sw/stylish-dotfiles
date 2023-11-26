@@ -13,7 +13,7 @@ fi
 
 # Comment out all lines below except the last to switch back to the default Hyprland dispatch method
 #[[ $1 -eq $passivews ]] && [[ $passivemonitor != "$activemonitor" ]] && (hyprctl dispatch swapactiveworkspaces "$activemonitor $passivemonitor")
-notify-send "Moving to $DEST"
+# notify-send "Moving to $DEST"
 hyprctl dispatch moveworkspacetomonitor $DEST $activemonitor
 #hyprctl dispatch focusmonitor "$activemonitor"
 hyprctl dispatch workspace $DEST
