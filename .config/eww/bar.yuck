@@ -56,7 +56,7 @@
   :focusable false
   :namespace "music"
   :geometry (geometry :width "600px" :height "150px" :x "660px" :y "30px")
-  (music_layout)
+  (music_layout :closer "music")
 )
 
 (defwindow music_1
@@ -66,11 +66,11 @@
   :focusable false
   :namespace "music"
   :geometry (geometry :width "600px" :height "150px" :x "660px" :y "30px")
-  (music_layout)
+  (music_layout :closer "music_1")
 )
 
-(defwidget music_layout []
-  (eventbox :onhoverlost "eww close music" :class "musicwidget"
+(defwidget music_layout [closer]
+  (eventbox :onhoverlost "eww close ${closer}" :class "musicwidget"
     (box :vexpand true :hexpand true :style "padding: 25px;" :space-evenly false
        (image
         :style "background-image:url('${SPOTIFY_ARTFILE}');" 
