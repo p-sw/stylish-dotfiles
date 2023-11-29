@@ -5,10 +5,10 @@ activemonitor=$(hyprctl monitors -j | jq '.[] | select(.focused == true).id')
 #activews=$(hyprctl monitors -j | jq '.[] | select(.focused == true).activeWorkspace.id')
 #passivews=$(hyprctl monitors -j | jq '.[] | select(.focused == false).activeWorkspace.id')
 
-DEST=$(($activemonitor + 1))$1
+DEST=$activemonitor$1
 if [[ $1 -eq "0" ]]
 then
-  DEST=$(($activemonitor + 2))$1
+  DEST=$(($activemonitor + 1))$1
 fi
 
 # Comment out all lines below except the last to switch back to the default Hyprland dispatch method
