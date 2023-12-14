@@ -288,7 +288,7 @@
         )
         (button
           :class "pos"
-          :onclick "kitty --hold zsh -c \"sudo pacman -Syu && eww reload\" &"
+          :onclick "kitty --hold zsh -c \"sudo pacman -Syu\" &"
           :visible {updatecount != "0"}
           (box :orientation "h" :space-evenly false :halign "center" :spacing 10 
             (label :text '󰚰' :style "font-size:1.5em;")
